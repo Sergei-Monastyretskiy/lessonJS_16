@@ -14,6 +14,13 @@ function styles() {
         .pipe(browserSync.stream());
 }
 
+// Копіювання JS файлів
+function scripts() {
+    return gulp.src('src/js/**/*.js')
+        .pipe(gulp.dest('js'))
+        .pipe(browserSync.stream());
+}
+
 // Мінімізація CSS
 function minifyCSS() {
     return gulp.src('css/style.css')
@@ -30,16 +37,18 @@ function serve() {
 
     // Відстеження змін
     gulp.watch('src/scss/**/*.scss', styles);
+    gulp.watch('src/js/**/*.js', scripts);
     gulp.watch('*.html').on('change', browserSync.reload);
 }
 
 // Збірка проекту
-const build = gulp.series(styles, minifyCSS);
+const build = gulp.series(gulp.parallel(styles, scripts), minifyCSS);
 
 // Розробка
-const dev = gulp.series(styles, serve);
+const dev = gulp.series(gulp.parallel(styles, scripts), serve);
 
 // Експорт
 exports.styles = styles;
+exports.scripts = scripts;
 exports.build = build;
 exports.default = dev;
