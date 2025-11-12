@@ -1,0 +1,108 @@
+// Простий SCSS файл для початківців
+
+// Змінні
+$primary-color: #007bff;
+$secondary-color: #6c757d;
+$white: #ffffff;
+$text-color: #333;
+
+// Базові стилі
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: $text-color;
+    background: #f8f9fa;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+// Хедер
+.header {
+    background: $primary-color;
+    color: $white;
+    padding: 2rem 0;
+    text-align: center;
+
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    p {
+        font-size: 1.2rem;
+    }
+}
+
+// Основний контент
+.main {
+    padding: 2rem 0;
+
+    h2 {
+        color: $primary-color;
+        margin-bottom: 1rem;
+    }
+}
+
+// Кнопки
+.btn {
+    background: $primary-color;
+    color: $white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background: #0056b3;
+        transform: translateY(-2px);
+    }
+
+    &--secondary {
+        background: $secondary-color;
+
+        &:hover {
+            background: #545b62;
+        }
+    }
+}
+
+// Картки
+.card {
+    background: $white;
+    padding: 1.5rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+
+    &:hover {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        transform: translateY(-3px);
+    }
+}
+
+// Медіа-запити
+@media (max-width: 768px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}

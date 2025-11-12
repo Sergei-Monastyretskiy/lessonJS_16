@@ -1,0 +1,13 @@
+// Конфігураційний файл для SCSS (опціонально)
+// Цей файл показує сучасний підхід до використання color функцій
+
+// Замість застарілих darken() та lighten() використовуйте:
+@use 'sass:color';
+
+// Приклад нових функцій:
+// color.adjust($primary-color, $lightness: -10%)  // замість darken()
+// color.adjust($primary-color, $lightness: 10%)   // замість lighten()
+// color.scale($primary-color, $lightness: -20%)   // масштабування
+
+// Ці функції можна використовувати в основному файлі main.scss
+// для більш сучасного коду без deprecation warnings
