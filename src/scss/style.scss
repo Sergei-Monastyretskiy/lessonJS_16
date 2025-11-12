@@ -1,4 +1,4 @@
-// Простий SCSS файл
+// Простий SCSS файл для демонстрації автопрефіксів
 
 // Змінні
 $primary-color: #007bff;
@@ -17,7 +17,10 @@ body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
     color: $text-color;
-    background: #f8f9fa;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .container {
@@ -26,72 +29,94 @@ body {
     padding: 0 20px;
 }
 
-// Хедер
-.header {
-    background: $primary-color;
-    color: $white;
-    padding: 2rem 0;
-    text-align: center;
-
-    h1 {
-        font-size: 2.5rem;
-        margin-bottom: 0.5rem;
-    }
-
-    p {
-        font-size: 1.2rem;
-    }
-}
-
-// Основний контент
-.main {
-    padding: 2rem 0;
-
-    h2 {
-        color: $primary-color;
-        margin-bottom: 1rem;
-    }
-}
-
-// Кнопки
+// Кнопки з автопрефіксами
 .btn {
-    background: $primary-color;
+    background: linear-gradient(135deg, $primary-color, darken($primary-color, 10%));
     color: $white;
     border: none;
     padding: 0.75rem 1.5rem;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateZ(0); // Для GPU ускорения
+    backface-visibility: hidden; // Проти мерцания
+    will-change: transform, box-shadow; // Оптимізація
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
     &:hover {
-        background: #0056b3;
-        transform: translateY(-2px);
+        background: linear-gradient(135deg, darken($primary-color, 5%), darken($primary-color, 15%));
+        transform: translateY(-3px) translateZ(0);
+        box-shadow: 0 8px 25px rgba($primary-color, 0.3);
+        filter: brightness(1.1);
+    }
+
+    &:active {
+        transform: translateY(-1px) translateZ(0);
+        transition: all 0.1s ease;
     }
 
     &--secondary {
-        background: $secondary-color;
+        background: linear-gradient(135deg, $secondary-color, darken($secondary-color, 10%));
 
         &:hover {
-            background: #545b62;
+            background: linear-gradient(135deg, darken($secondary-color, 5%), darken($secondary-color, 15%));
+            box-shadow: 0 8px 25px rgba($secondary-color, 0.3);
         }
     }
 }
 
-// Картки
+// Картки з сучасними ефектами
 .card {
     background: $white;
-    padding: 1.5rem;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin-bottom: 1rem;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    margin-bottom: 1.5rem;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    position: relative;
+    overflow: hidden;
+
+    // Градієнтна рамка
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg,
+                rgba($primary-color, 0.1),
+                rgba($secondary-color, 0.05));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+    }
 
     &:hover {
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        transform: translateY(-3px);
+        transform: translateY(-8px) translateZ(0);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+
+        &::before {
+            opacity: 1;
+        }
+    }
+
+    h3 {
+        position: relative;
+        z-index: 1;
+    }
+
+    p {
+        position: relative;
+        z-index: 1;
     }
 }
 
-// Медіа-запити
+// Медіа-запити з новими властивостями
 @media (max-width: 768px) {
     .container {
         padding: 0 15px;
@@ -104,5 +129,81 @@ body {
     .btn {
         width: 100%;
         margin-bottom: 10px;
+    }
+
+    .card {
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px); // Ручний префікс для демонстрації
+    }
+}
+
+// Додаткові стилі для демонстрації автопрефіксів
+.header {
+    background: linear-gradient(135deg, $primary-color 0%, darken($primary-color, 20%) 100%);
+    color: $white;
+    padding: 3rem 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+
+    // Анімований фон
+    &::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: repeating-linear-gradient(45deg,
+                transparent,
+                transparent 2px,
+                rgba(255, 255, 255, 0.05) 2px,
+                rgba(255, 255, 255, 0.05) 4px);
+        animation: slide 20s linear infinite;
+        pointer-events: none;
+    }
+
+    h1 {
+        font-size: 2.8rem;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        position: relative;
+        z-index: 1;
+    }
+
+    p {
+        font-size: 1.3rem;
+        opacity: 0.9;
+        position: relative;
+        z-index: 1;
+    }
+}
+
+// Анімації що потребують автопрефіксів
+@keyframes slide {
+    0% {
+        transform: translateX(-50px) translateY(-50px);
+    }
+
+    100% {
+        transform: translateX(0px) translateY(0px);
+    }
+}
+
+// Grid layout для сучасних браузерів
+.main {
+    padding: 3rem 0;
+    display: grid;
+    gap: 2rem;
+
+    h2 {
+        color: $primary-color;
+        margin-bottom: 2rem;
+        text-align: center;
+        font-size: 2.2rem;
+        background: linear-gradient(135deg, $primary-color, darken($primary-color, 15%));
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
     }
 }
